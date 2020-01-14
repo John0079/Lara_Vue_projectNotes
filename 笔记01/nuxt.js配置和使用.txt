@@ -1,0 +1,22 @@
+nuxt.js配置步骤
+
+以上失败了，接着走另外一个路线
+
+0. 先卸载已有的模板版本
+    npm uninstall npx
+
+1. 安装nujs组件
+    npm install npx
+
+2. 创建项目
+    npx create-nuxt-app blog
+
+3. 创建完成出现以下信息
+    To get started:
+        cd blog
+        npm run dev
+
+    To build & start for production:
+        cd blog
+        npm run build
+        npm run start

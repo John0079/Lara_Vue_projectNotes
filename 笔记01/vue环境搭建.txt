@@ -1,0 +1,46 @@
+梦学5-01环境搭建
+1. 安装node.js
+    a.官网下载安装
+    b.版本要求：8.9+
+    c.查看版本  node -v
+
+2. 安装cnpm
+    npm install cnpm -g --registry=https://registry.npm.taobao.org
+
+2.1 为npm配置淘宝镜像
+    npm config set registry https://registry.npm.taobao.org
+
+2.2 为npm还原默认镜像地址
+    npm config set registry https://registry.npmjs.org/
+
+3. 全局安装vue脚手架工具 Vue-CLI
+    a. 安装： cnpm install -g @vue/cli@3.10.0
+    b. 安装后查看版本  vue -V
+
+4. 在vscode中使用Vue ClI创建项目
+    a. vue create test
+    b. 出现错误， "因为在此系统上禁止运行脚本"报错
+    c. 解决办法：
+        1). 是因为PowerShell执行策略的问题。解决办法：
+        2). 以管理员身份运行vscode
+        3). 执行：get-ExecutionPolicy 显示Restricted
+        3). 执行：set-ExecutionPolicy RemoteSigned;
+        4). 这时再执行get-ExecutionPolicy，就显示RemoteSigned;
+
+5. 创建vue项目
+    vue create mxg-mms
+
+6. 项目创建完成出现以下信息
+    cd mxg-mms
+    npm run serve
+
+7. 运行完上面命令有以下信息
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.52.131:8080/
+  然后再浏览器中输入以上地址即可
+
+8. 此时试着修改 helloWorld.vue， 看浏览器的变化
+
+9. 打包项目
+    npm run build
+    

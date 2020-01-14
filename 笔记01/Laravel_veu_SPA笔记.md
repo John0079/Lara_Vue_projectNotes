@@ -1,0 +1,30 @@
+# 第一步：进入和配置环境
+
+  1. 启动Laragon
+  2. 启动Laragon的终端
+  3. 创建一个项目：名字为：vue-spa
+
+    composer create-project --prefer-dist laravel/laravel vue-spa
+  4. 这个时候已经生产一个laravel的php项目
+
+     
+
+  5. 为了使用vue.js，我们需要下载前端倚赖
+
+     ``` 
+cd vue-spa
+     composer require laravel/ui 
+php artisan ui vue --auth
+     
+     npm install
+     npm run prod
+     
+
+     npm install vue-router --save-dev
+
+     php artisan migrate
+     
+     ```
+     
+     
+
