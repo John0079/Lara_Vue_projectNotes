@@ -20,3 +20,4 @@ nuxt.js配置步骤
         cd blog
         npm run build
         npm run start
+
