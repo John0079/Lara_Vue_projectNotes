@@ -11,6 +11,15 @@
    ```
    yarn config set registry https://registry.npm.taobao.org
    ```
+   
+
+3. 还原yarn镜像
+
+   ```
+   yarn config set registry https://registry.yarnpkg.com
+   ```
+
+   
 
 # 2. 创建nuxt.js项目
 
