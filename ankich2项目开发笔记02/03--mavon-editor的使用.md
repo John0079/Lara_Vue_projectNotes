@@ -11,7 +11,7 @@
    ```
    yarn config set registry https://registry.npm.taobao.org
    ```
-   
+
 3. 还原yarn镜像
 
    ```
@@ -57,20 +57,22 @@
 
    
 
-# 3. vue2-editer安装与配置
+# 3. mavon-editer安装与配置
 
 1. 安装
 
    ```
-   yarn add vue2-editor
+   yarn add mavon-editor
    ```
 
 2. 在plugins目录下创建editor.js文件
 
    ```
    import Vue from 'vue'
-   import VueEditor from 'vue2-editor'
-   Vue.use(VueEditor)
+   import MavonEditor from 'mavon-editor'
+   import 'mavon-editor/dist/css/index.css'
+   Vue.use(MavonEditor)
+   
    ```
 
 3. 编辑nuxt.config.js文件
@@ -81,14 +83,13 @@
    ],
    ```
 
-
-# 4. vue2-editer的使用
+# 4. mavon-editer的使用
 
 ```
 <template>
   <div>
     <div>hahhahah</div>
-    <vue-editor></vue-editor>
+    <mavon-editor v-model="handbook" />
   </div>
 </template>
 
@@ -102,6 +103,19 @@ export default {
 </script>
 
 
+```
+
+
+
+# 4. mavon-editor使用参考
+
+```
+成功测试的：
+http://www.fly63.com/nav/2051
+
+
+
+https://www.jianshu.com/p/78ea4f94a3d0
 ```
 
 
