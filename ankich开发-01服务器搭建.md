@@ -2,7 +2,11 @@
 
 项目域名： api.ankichina.net
 
+项目git仓库：https://github.com/John0079/ankich-api.git
+
 认证模式： passport的秘密模式
+
+postman工具：  https://apizza.net/pro/#/ 
 
 ## 1.1. 创建项目
 
@@ -248,7 +252,7 @@
                $table->string('password');
                $table->string('avatar')->default('default')->comment('用户头像');
                $table->smallInteger('is_active')->default(0)->comment("用户是否激活");
-               $table->smallInteger('level')->default(1)->comment('用户级别');
+               $table->smallInteger('level')->default(1)->comment('用户级别，普通用户-1，志愿者-2， 管理者-3， 高级管理者-4');
                $table->json('production')->nullable()->comment('在网站上的贡献');
                $table->json('setting')->nullable()->comment('用户设置');
                $table->rememberToken();
@@ -270,10 +274,10 @@
                $table->string('index_code')->unique()->comment('序号编码');
                $table->string('title')->comment('段落标题');
                $table->string('title_translation')->comment('段落标题翻译');
-               $table->string('content')->comment('段落内容');
-               $table->string('content_translation')->comment('段落内容翻译');
+               $table->text('content')->comment('段落内容');
+               $table->text('content_translation')->comment('段落内容翻译');
                $table->json('translators')->nullable()->comment('翻译者，可能是多个人');
-               $table->string('doc_type')->default("")->comment('指定是哪个文档');
+               $table->string('doc_type')->default("")->comment('指定是哪个文档anki, android, ios');
                $table->smallInteger('complete_status')->default(0)->comment('是否翻译完整');
                $table->timestamps();
            });
@@ -479,5 +483,48 @@ php artisan migrate
 php artisan route:list
 ```
 
+# 2. 写前端服务接口
 
+## 2.1. 创建控制器
+
+### 2.1.1. 创建一个获取翻译段落内容的控制器
+
+```
+0.  php artisan make:controller front/MamualController
+	创建资源理由
+	
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 3. 遇到的大坑
+
+## 3.1. json字段的处理问题：
+
+参考博文：  https://www.jianshu.com/p/fe2e753a5d5f 
+
+重点：数据库定义了json字段，则要在model中进行声明哟！！！
+
+```
+class JsonDemo extends Model
+{
+    protected $table = 'json_demo';
+
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'attr' => 'json', // 声明json类型
+    ];
+}
+```
 

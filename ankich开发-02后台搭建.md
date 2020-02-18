@@ -83,7 +83,7 @@ alt  + shift + f 对当前文件进行格式化
 #### 2.1.6.1 安装插件
 
 ```
-yarn add vue2-editor
+yarn add mavon-editor
 ```
 
 #### 2.1.6.2 创建插件配置文件
@@ -92,7 +92,7 @@ yarn add vue2-editor
 
 ```
 import Vue from 'vue'
-import VueEditor from 'vue2-editor'
+import VueEditor from 'mavon-editor'
 Vue.use(VueEditor)
 ```
 
@@ -144,5 +144,65 @@ ankich-admin---for-v01.zip
 
 
 
-## 2.3. 核心逻辑
+## 2.3. 翻译任务指派部分
+
+
+
+
+
+具体工作逻辑步骤：
+
+ 1. 补充翻译段落信息
+
+ 2. 修改form表单
+
+ 3. 分页 doc_type 查询显示 search
+
+ 4. 查询的结果包含 所有志愿者信息
+
+ 5. 添加翻译者
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
