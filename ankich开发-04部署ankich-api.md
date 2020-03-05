@@ -24,9 +24,10 @@ password: a8bf032e
 
 ```
 https://cloud.tencent.com/ 
+公网：49.234.3.219
 点击： 控制台>>云服务器>>实例-->>登陆
 "大啊190910honghu&夏"
-"Amen190910honghu&xiaji"
+
 
 ```
 

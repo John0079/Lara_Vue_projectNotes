@@ -20,17 +20,17 @@ yarn create nuxt-app qt-html-01  (使用vuetify框架)
 
 ## 1.2. 测试的整体步骤
 
-| 序号 | 项目名     | 作用             | 加插件         |
-| ---- | ---------- | ---------------- | -------------- |
-| 1    | qt-html-01 |                  |                |
-| 2    | qt-html-02 | 简化，打包，上线 |                |
-| 3    | qt-html-03 | 测试互发信息     | qwebchannel.js |
-|      |            |                  |                |
-|      |            |                  |                |
-|      |            |                  |                |
-|      |            |                  |                |
-|      |            |                  |                |
-|      |            |                  |                |
+| 序号 | 项目名     | 作用                    | 加插件         |
+| ---- | ---------- | ----------------------- | -------------- |
+| 1    | qt-html-01 |                         |                |
+| 2    | qt-html-02 | 简化，打包，上线        |                |
+| 3    | qt-html-03 | 测试互发信息            | qwebchannel.js |
+| 4    | qt-html-04 | 规范化cpp---web通信标准 |                |
+| 5    | qt-html-05 | 引进pubsub-js           | pubsub-js      |
+|      |            |                         |                |
+|      |            |                         |                |
+|      |            |                         |                |
+|      |            |                         |                |
 
 ## 1.3. 项目备份
 
@@ -171,21 +171,160 @@ export default {
 
 ## 3.4. Q测试
 
-打包，并测试成功
+打包，并测试成功，Qt端项目，webEng_test03， html页面：~/build_temp/index002.html
 
-## 3.5. 发现问题
+## 3.5. 美化页面布局
 
-使用vuetify-在右侧和下方总会有滚动条，看上去太恶心啦，多余的东西，怎么都去不掉，这是vuetify框架余生带来。没有办法，还是用element-ui吧
+借用vuetify的功能来美化页面
 
 ## 3.6. 备份
 
-备份项目到 qt-html-03.zip,
+备份项目到 qt-html-03.zip, 修改现有项目为qt-html-04
+
+
+
+# 4. 测试qt-html-04,标准化交通线
+
+## 4.1. 规划ipc接口
+
+### 4.1.1. cpp端
+
+```
+发报：综合信息
+	ipcMainSend(const QJsonObject &json)
+		------->ipcRendererOn(response)
+发报：单信息
+	ipcMainSendStr(const QString &text)
+		------->ipcRenderOnStr(response)
+
+接收信息：综合信息
+	ipcMainOn(const QJsonObject &request)
+接收信息：单信息
+	ipcMainOnStr(const QString &request)
+```
+
+### 4.1.2. html端
+
+```
+发报：综合信息
+	ipcRendererSend(json)
+		------->ipcMainOn(request)
+发报：单信息
+	ipcRenderSendStr(text)
+		------->ipcMainOnStr(request)
+
+接收信息：综合信息
+	ipcRendererOn(response)
+接收信息：单信息
+	ipcRenderOnStr(response)
+```
+
+
+
+## 4.2. 双端方法规划
+
+### 4.2.1. cpp调用html端
+
+```
+执行方法：
+	toWeb_swithPadHome() {
+		var json = {
+			"action": "fromQt_swithPadHome",
+			"paras": {"aa": "aaaaaaa"}
+		}
+		ipcMainSend(json);
+	}
+	
+目标方法：
+	fromQt_swithPadHome()
+
+```
+
+
+
+### 4.2.2. html调用cpp端
+
+```
+执行方法：
+	toQt_queryWord() {
+		var json = {
+			"action": "fromWeb_queryWord",
+			"paras": {"word": "schama"}
+		}
+		ipcMainSend(json);
+	}
+	
+目标方法：
+	fromWeb_queryWord()
+
+	
+```
+
+
+
+## 4.3. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test04， html页面：~/build_temp/index004.html
+
+## 4.4. 备份
+
+备份项目到 qt-html-04.zip, 修改现有项目为qt-html-05
 
 
 
 
 
+# 5. 测试qt-html-05,引进pubSub.js
 
+## 5.1. 三个页面,排兵布阵
+
+### 5.1.1. welcome页面
+
+```
+这个页面内容：程序的首页
+要求：
+{
+	1. 切换layout模式：即隐藏appbar,隐藏drawer,隐藏footer
+	2. 主页面切换到组件 pageWelcome
+	3. 
+}
+```
+
+### 5.1.2. Course页面
+
+```
+这个页面内容：程序的第二个页面，让用户选择课程
+要求：
+{
+	1. 切换layout模式：即隐藏appbar,隐藏drawer,隐藏footer
+	2. 主页面切换到组件 pageCourses
+	3. 
+}
+```
+
+### 5.1.3. learning页面，即主页面
+
+```
+这个页面内容：程序的第三个页面，学习状态的页面
+要求：
+{
+	1. 切换layout模式：即显示appbar,显示drawer,显示footer
+	2. 
+	3. 
+}
+```
+
+## 5.2. 安装插件
+
+安装插件：yarn add pubsub-js  
+
+## 5.3. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test04，
+
+## 5.4. 备份
+
+备份项目到 qt-html-05.zip, 修改现有项目为qt-html-06
 
 
 
