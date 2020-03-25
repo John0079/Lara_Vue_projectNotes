@@ -20,17 +20,17 @@ yarn create nuxt-app qt-html-01  (使用vuetify框架)
 
 ## 1.2. 测试的整体步骤
 
-| 序号 | 项目名     | 作用                    | 加插件         |
-| ---- | ---------- | ----------------------- | -------------- |
-| 1    | qt-html-01 |                         |                |
-| 2    | qt-html-02 | 简化，打包，上线        |                |
-| 3    | qt-html-03 | 测试互发信息            | qwebchannel.js |
-| 4    | qt-html-04 | 规范化cpp---web通信标准 |                |
-| 5    | qt-html-05 | 引进pubsub-js           | pubsub-js      |
-|      |            |                         |                |
-|      |            |                         |                |
-|      |            |                         |                |
-|      |            |                         |                |
+| 序号 | 项目名     | 作用                                   | 加插件         |
+| ---- | ---------- | -------------------------------------- | -------------- |
+| 1    | qt-html-01 |                                        |                |
+| 2    | qt-html-02 | 简化，打包，上线                       |                |
+| 3    | qt-html-03 | 测试互发信息                           | qwebchannel.js |
+| 4    | qt-html-04 | 规范化cpp---web通信标准                |                |
+| 5    | qt-html-05 | 引进pubsub-js                          | pubsub-js      |
+| 6    | qt-html-06 |                                        |                |
+| 7    | qt-html-07 |                                        |                |
+| 8    | qt-html-08 |                                        |                |
+| 9    | qt-html-09 | 实现鼠标单击，双击，右击，选中事件分离 | jquery         |
 
 ## 1.3. 项目备份
 
@@ -314,19 +314,191 @@ export default {
 }
 ```
 
-## 5.2. 安装插件
+## 5.3. 建立桥接
 
-安装插件：yarn add pubsub-js  
+```
+
+    void toWeb_swithPadHome();
+    void toWeb_swithPageWelcom();
+    void toWeb_swithPageCourse();
+    void toWeb_swithPageLearning();
+    void toWeb_swithPadGeneral();
+
+    void toWeb_showNoAnki();
+    void toWeb_showFirstWithAnki();
+    void toWeb_showSecondWithAnki();
+    void toWeb_showLclFlag();
+    void toWeb_showWaiting();
+    void toWeb_showCourseList();
+    void toWeb_showUpdateNewVersion();
+    void toWeb_showNoInternet();
+    void toWeb_getLocalTime();
+```
+
+
 
 ## 5.3. Q测试
 
-打包，并测试成功，Qt端项目，webEng_test04，
+打包，并测试成功，Qt端项目，webEng_test05，打包vue项目为 dist5, dist5 内置服务器LclServer.exe
 
 ## 5.4. 备份
 
 备份项目到 qt-html-05.zip, 修改现有项目为qt-html-06
 
+# 6. 测试qt-html-06
 
+## 6.1. 建立welcome页面，和course页面的桥接
+
+```
+
+```
+
+
+
+## 6.3. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test06，打包vue项目为 dist6, dist6 内置服务器LclServer.exe
+
+## 6.4. 备份
+
+备份项目到 qt-html-06.zip, 修改现有项目为qt-html-07
+
+# 7. 测试qt-html-07
+
+## 7.1. 实现Qt向html发送wordSStr
+
+```
+
+```
+
+
+
+## 7.2. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test07，打包vue项目为 dist7, dist7 内置服务器LclServer.exe
+
+## 7.3. 备份
+
+备份项目到 qt-html-07.zip, 修改现有项目为qt-html-08
+
+# 8. 测试qt-html-08
+
+## 8.1. 实现Qt加载WaveWidget
+
+```
+
+```
+
+## 8.2. 实现audioContrl
+
+
+
+## 8.3. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test08，打包vue项目为 dist8, dist8 内置服务器LclServer.exe
+
+## 8.4. 备份
+
+备份项目到 qt-html-08.zip, 修改现有项目为qt-html-09
+
+# 9. 测试qt-html-09
+
+## 9.1. 实现鼠标单击，双击，右击，选中事件分离
+
+```
+
+    registAllMouseEvent() {
+      if (process.browser) {
+        // 1. 先清除已经绑定的事件
+        $(".word").off();
+
+        //2. 添加单击左键事件
+        $(".word").on("click", event => {
+          // this.wordClick(event);
+          // 让段落播放暂停到这里了
+          if (this.clickFlag) {
+            //取消上次延时未执行的方法
+            this.clickFlag = clearTimeout(this.clickFlag);
+          }
+
+          this.clickFlag = setTimeout(function() {
+            // click 事件的处理
+            console.log("播放进度，暂停到这个单词---", event.target.id);
+          }, 300); //延时300毫秒执行
+        });
+
+        //3. 添加 鼠标双击 事件
+        $(".word").on("dblclick", event => {
+          // this.wordClick(event);
+          // 选中这个单词，要查单词啦
+          // console.log("选中这个单词，要查单词啦---", event.target.id);
+          if (this.clickFlag) {
+            //取消上次延时未执行的方法
+            this.clickFlag = clearTimeout(this.clickFlag);
+          }
+
+          // dblclick 事件的处理
+          console.log("zheshi 鼠标逐渐的-----双击时间");
+        });
+
+        //4. 鼠标拖拽选中和--右键单击事件
+        $(".word").on("mouseup", event => {
+          // 4.1 鼠标拖拽选中事件
+          var selection = window.getSelection();
+          var range00 = document.createRange();
+          var str = selection.toString();
+          if (str.length > 0) {
+            //myAlert(selection.anchorNode.parentElement.id + "-" + selection.focusNode.parentElement.id);
+            var startNode = selection.anchorNode.parentElement;
+            var endNode = selection.focusNode.parentElement;
+            range00.setStart(startNode, 0);
+            range00.setEnd(endNode, 1);
+            selection.removeAllRanges();
+            selection.addRange(range00);
+            // selectThisSegment(startNode.id, endNode.id);
+            console.log(
+              "选中了一个段落，起始位置",
+              startNode.id,
+              "---结束位置--",
+              endNode.id
+            );
+            return;
+          }
+
+          // 4.2 鼠标右键点击事件
+          if (event.button === 2) {
+            var NodeId = event.target.id;
+            console.log("鼠标右键单机了---", NodeId);
+          }
+        });
+      }
+    },
+```
+
+## 9.2. 结合LcLSerNew.py实现自动查单词
+
+这个时候的py项目为newLcLser09
+
+
+
+## 9.3. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test09，打包vue项目为 dist9, dist9 内置服务器LclServer.exe
+
+测试注意：
+
+```
+1. 首先运行 LcLSerNew.py
+2. 再发送请求：http://localhost:17701/initUser  以便于开启权限
+3. 运行LclServer.exe
+4. 运行Qt项目，测试查单词
+```
+
+
+
+## 9.4. 备份
+
+备份项目到 qt-html-09.zip, 修改现有项目为qt-html-10
 
 
 

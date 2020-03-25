@@ -4,249 +4,108 @@
 
 项目没有 Eslint检测，项目是单页面应用---spa
 
-yarn create nuxt-app qt-ele-00
+yarn create nuxt-app qt-html-01  (使用vuetify框架)
 
 ```
-
-? Choose UI framework Element
+? Choose UI framework Vuetify.js
 ? Choose custom server framework None (Recommended)
 ? Choose Nuxt.js modules Axios, Progressive Web App (PWA) Support, DotEnv
 ? Choose linting tools (Press <space> to select, <a> to toggle all, <i> to invert selection)
 ? Choose test framework None
 ? Choose rendering mode Single Page App
-? Choose development tools jsconfig.json (Recommended for VS Code)
+? Choose development tools (Press <space> to select, <a> to toggle all, <i> to invert selection)
 ```
 
 
 
 ## 0.2. 测试的整体步骤
 
-| 序号 | 项目名    | 作用                     | 加插件 |
-| ---- | --------- | ------------------------ | ------ |
-| 1    | qt-ele-01 | 简化，打包，上线，连接Qt |        |
-| 2    | qt-ele-02 |                          |        |
-| 3    | qt-ele-03 |                          |        |
-|      |           |                          |        |
-|      |           |                          |        |
-|      |           |                          |        |
-|      |           |                          |        |
-|      |           |                          |        |
-|      |           |                          |        |
+| 序号 | 项目名     | 作用                                           | 加插件         |
+| ---- | ---------- | ---------------------------------------------- | -------------- |
+| 1    | qt-html-01 |                                                |                |
+| 2    | qt-html-02 | 简化，打包，上线                               |                |
+| 3    | qt-html-03 | 测试互发信息                                   | qwebchannel.js |
+| 4    | qt-html-04 | 规范化cpp---web通信标准                        |                |
+| 5    | qt-html-05 | 引进pubsub-js                                  | pubsub-js      |
+| 6    | qt-html-06 |                                                |                |
+| 7    | qt-html-07 |                                                |                |
+| 8    | qt-html-08 |                                                |                |
+| 9    | qt-html-09 | 实现鼠标单击，双击，右击，选中事件分离, 查单词 | jquery         |
+| 10   | qt-html-10 | 开始项目路径开发                               |                |
+|      |            |                                                |                |
+|      |            |                                                |                |
+|      |            |                                                |                |
+|      |            |                                                |                |
+
+## 0.3. 项目备份
+
+备份项目到 qt-html-01.zip,   修改项目名称 qt-html-02
 
 
 
+# 10. 测试qt-html-10项目
 
-
-# 1. 测试qt-ele-01项目
-
-## 1.1. ~/plugins引入qwebchannel.js
-
-拷贝qwebchannel.js到plugins目录,之后的目录结构为：
-
-```
-plugins
-	qwebchannel.js
-	element-ui.js
-```
+## 10.1. 修改界面上的pad对应的按钮
 
 
 
-## 1.2. 创建页面结构
+## 10.2. 连接界面上播放进度条
 
-```
-pages
-	pad001
-		index.vue
-	pad002
-		index.vue
-	pad004
-		index.vue
-    index.vue
-		
-```
+1. 启动界面的时候，Qt要给html信号，告诉总长度，和当前进度
+2. 界面点击 播放的时候，发送消息给 pages/index.vue,  再发给Qt开始播放
+3. 界面点击停止的时候，。。。。。。
+4. 界面点击暂停的时候，。。。。。
+5. 界面拖动的时候，。。。。。。
+6. Qt播放的时候，把进度播放给 html
 
-## 1.3. 在静态文件中添加目录结构pad003
 
-```
-static
-	pad003
-		icon.png
-	....
-	....
-	....
-```
 
-测试成功
+## 10.3. 修改查单词的 释义列表
 
-## 1.4. 编辑 pad00?/index.vue文件
+v-data-table
 
-```
-<template>
-  <div><img width="100%" src="~/static/pad003/icon.png"/>
-  </div>
-</template>
 
-<script></script>
 
-```
+## 10.4. 实现单词卡片的制作
 
-## 1.5. 编辑入口index.vue文件
+这个时候的py项目为newLcLser09
 
-```
-<template>
-  <el-container>
-    <el-aside width="200px">Aside</el-aside>
-    <el-container>
-      <el-header>Header</el-header>
-      <el-main>
-        <div>
-          <el-button type="primary" @click="fromWebToCpp">主要按钮</el-button>
-        </div>
-        <div>{{ userAgent }}</div>
-      </el-main>
-      <el-footer>Footer</el-footer>
-    </el-container>
-  </el-container>
-</template>
 
-<script>
-import QWebChannel from "~/plugins/qwebchannel";
-export default {
-  data() {
-    return {
-      userAgent: ""
-    };
-  },
-  created() {},
-  mounted() {
-    if (process.browser) {
-      this.userAgent = window.navigator.userAgent;
-      // that = this
-      if (window.navigator.userAgent.indexOf("Toon-pc") !== -1) {
-        new QWebChannel(window.qt.webChannelTransport, channel => {
-          window.bridge = channel.objects.cppObject;
 
-          const msec = new Date().getTime();
-          // cpp通过signalToWeb信号给web传值:response
+## 10.5. 实现单词卡片的制作
 
-          window.bridge.signalToWeb.connect(function(response) {
-            window.alert(msec);
-          });
+这个时候的py项目为newLcLser09
 
-          window.bridge.signalToWeb_1.connect(this.showDiff);
-        });
-        console.log("==QWebChannel==", QWebChannel);
-      } else {
-        console.log("==+++=QWebChannel==", QWebChannel);
-      }
-    }
-  },
-  methods: {
-    getCppData(response) {
-      this.userAgent = response;
-    },
-    fromWebToCpp() {
-      // web调用cpp的 sendTextToCpp 方法，并带上参数
-      if (process.browser) {
-        if (window.bridge) {
-          window.bridge.sendTextToCpp(
-            JSON.stringify({
-              userId: 100
-            })
-          );
-        } else {
-          console.log("this is no bridge");
-        }
-      }
-    },
-    showDiff(response) {
-      var msec = new Date().getTime();
-      var oldSec = response.msec;
-      alert(msec - oldSec);
-    }
-  }
-};
-</script>
 
-<style>
-.el-header,
-.el-footer {
-  background-color: #b3c0d1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
-}
 
-.el-aside {
-  background-color: #d3dce6;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
-}
+## 10.6. 实现再doc文件中选词，查词制卡
 
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
+这个时候的py项目为newLcLser09
 
-body > .el-container {
-  margin-bottom: 40px;
-}
 
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
 
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-</style>
+## 10.7. 将python的lclserNew.py项目集合到Qt中
+
+这个时候的py项目为newLcLser09
+
+## 10.8. Q测试
+
+打包，并测试成功，Qt端项目，webEng_test09，打包vue项目为 dist9, dist9 内置服务器LclServer.exe
+
+测试注意：
 
 ```
 
-## 1.6. 打包测试
 
-测试Qt项目：D:\QtProjectS\day08\webEng_test02
-
-测试py项目：D:\PyProjectS_32bit\kernalServer01
-
-测试结果：ok
-
-## 1.7. 备份
-
-备份项目到： qt-ele-01.zip, 打包项目到 qt-ele-02
-
-
-
-# 2. 测试打通--交通线
-
-## 2.1 html--->cpp 发报
-
-怎么发报？
-
-```
-html端：
-	ipcRenderer.sendJson(* json)
-cpp端：
-	ipcMain.on(* json)
-	
 ```
 
 
 
-## 2.2 cpp--->html发报
+## 10.9. 备份
 
-怎么发报？
+备份项目到 qt-html-10.zip, 修改现有项目为qt-html-11
 
-```
-html端：
-	ipcMain.send(* json)
-cpp端：
-	ipcRenderer.on(* json)
-```
+
 
 
 
